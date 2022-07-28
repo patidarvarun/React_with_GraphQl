@@ -2,16 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
 
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-
-const queryClient = new QueryClient();
+const client = new ApolloClient({
+  uri: "http://localhost:5000/graphql",
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <ApolloProvider client={client}>
       <App />
-    </QueryClientProvider>
+    </ApolloProvider>
   </React.StrictMode>
 );
