@@ -38,6 +38,9 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     createUser({ variables: { ...user } });
+    setTimeout(() => {
+      window.location="./"
+    }, 2000);
   };
   return (
     <div className="container-scroller">
