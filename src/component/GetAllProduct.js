@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { gql } from "apollo-boost";
-import { useMutation,useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import Box from "@mui/material/Box";
 import { TextareaAutosize } from "@mui/material";
 import Modal from "@mui/material/Modal";
@@ -86,8 +86,7 @@ function GetAllProduct() {
     window.location = "/";
   };
 
-
-  const [update_product, { data }] = useMutation(UPDATE_PRODUCT );
+  const [update_product, { data }] = useMutation(UPDATE_PRODUCT);
 
   const handleUpdate = (id) => {
     handleOpen();
@@ -95,10 +94,10 @@ function GetAllProduct() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-     console.log("id", idd);
-    update_product({ variables: { id:idd,...update }});
+    console.log("id", idd);
+    update_product({ variables: { id: idd, ...update } });
     setTimeout(() => {
-      window.location="/"
+      window.location = "/";
     }, 2000);
   };
 
@@ -199,6 +198,8 @@ function GetAllProduct() {
         </Modal>
       </div>
       <a href="/addProduct">Add Product</a>
+      <a href="/addImage">Add Image</a>
+
       <h1 style={{ color: "red" }}>Here my all Products</h1>
       <table>
         <th>Id</th>

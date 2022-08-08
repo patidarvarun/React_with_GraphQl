@@ -15,7 +15,6 @@ const AddProduct = () => {
     setImage(e.target.files[0]);
   };
 
-  console.log("@@@@@@@@2!!!!!!!!", image);
   const ADD_PRODUCT = gql`
     mutation createProduct(
       $name: String!

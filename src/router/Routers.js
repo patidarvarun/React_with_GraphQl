@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
+import AddImage from "../component/AddImage";
 import AddProduct from "../component/AddProduct";
 import GetAllProduct from "../component/GetAllProduct";
 
@@ -12,6 +13,7 @@ class Routers extends Component {
         <Routes>
           <Route exact path="/addProduct" element={<AddProduct />} />
           <Route exact path="/" element={<GetAllProduct />} />
+          <Route exact path="/addImage" element={<AddImage />} />
         </Routes>
       </>
     );
