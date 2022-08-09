@@ -26,18 +26,8 @@ const AddImage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    getBase64(file, cb) {
-      let reader = new FileReader();
-      reader.readAsDataURL(files);
-      reader.onload = function () {
-          cb(reader.result)
-      };
-      reader.onerror = function (error) {
-          console.log('Error: ', error);
-      };
-  }
     console.log("@#$$$$$$$$$$$Submit", files);
-    uploadFilee({ variables: { name: "varun", filename: "okkk2" } });
+    uploadFilee({ variables: { files } });
 
     // setTimeout(() => {
     //   window.location = "./";
@@ -47,7 +37,12 @@ const AddImage = () => {
   return (
     <div className="d-flex flex-row align-items-center mb-4">
       <div className="form-outline flex-fill mb-0">
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          action="http://localhost:5000/upload"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <label className="form-label" htmlFor="form3Example3c">
             Image *
           </label>

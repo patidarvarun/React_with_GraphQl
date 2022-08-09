@@ -35,6 +35,7 @@ function GetAllProduct() {
       getAllProduct {
         name
         price
+        image
         quantity
         id
       }
@@ -46,6 +47,7 @@ function GetAllProduct() {
       $id: ID
       $name: String!
       $price: String!
+      $image: String!
       $description: String!
       $quantity: String!
     ) {
@@ -54,12 +56,14 @@ function GetAllProduct() {
         product: {
           name: $name
           price: $price
+          image: $image
           description: $description
           quantity: $quantity
         }
       ) {
         name
         price
+        image
         description
         quantity
       }
@@ -206,6 +210,7 @@ function GetAllProduct() {
         <th>Name</th>
         <th>Price</th>
         <th>Quantity</th>
+        <th>Image</th>
         <th>Edit</th>
         <th>Delete</th>
 
@@ -223,6 +228,9 @@ function GetAllProduct() {
               </td>
               <td>
                 <p>{item.quantity}</p>
+              </td>
+              <td>
+                <img src={`http://localhost:5000/${item.image}`} />
               </td>
               <td>
                 <button

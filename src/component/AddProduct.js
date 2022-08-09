@@ -9,10 +9,43 @@ const AddProduct = () => {
   const [price, setPrice] = useState();
   const [description, setDescription] = useState();
   const [quantity, setQuantity] = useState();
-  const [cat_id, setCat] = useState("62b01221715be3f7e7c1925c");
+  const [cat_id, setCat] = useState("62f1fb62a777920bd748b911");
+  const [userInfo, setuserInfo] = useState({
+    file: [],
+    filepreview: null,
+  });
+  const [base, setBase] = useState("");
 
   const saveFile = (e) => {
     setImage(e.target.files[0]);
+    // setuserInfo({
+    //   ...userInfo,
+    //   file: e.target.files[0],
+    //   filepreview: URL.createObjectURL(e.target.files[0]),
+    // });
+
+    let files = e.target.files;
+
+    var allFiles = [];
+    for (var i = 0; i < files.length; i++) {
+      let file = files[i];
+
+      let reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        let fileInfo = {
+          name: file.name,
+          type: file.type,
+          size: Math.round(file.size / 1000) + " kB",
+          base64: reader.result,
+          file: file,
+        };
+        allFiles.push(fileInfo);
+        setBase(allFiles[0].base64);
+      };
+    }
   };
 
   const ADD_PRODUCT = gql`
@@ -43,13 +76,21 @@ const AddProduct = () => {
       }
     }
   `;
+
   const [createUser, { data }] = useMutation(ADD_PRODUCT);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     createUser({
-      variables: { name, image, quantity, price, description, cat_id },
+      variables: {
+        name,
+        image: base,
+        quantity,
+        price,
+        description,
+        cat_id,
+      },
     });
     // setTimeout(() => {
     //   window.location = "./";
