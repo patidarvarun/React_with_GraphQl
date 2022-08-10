@@ -26,10 +26,13 @@ function GetAllProduct() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [update, setUpdate] = useState();
-  const handleOnChange = (event) => {
-    setUpdate({ ...update, [event.target.name]: event.target.value });
-  };
+  const [name, setName] = useState();
+  const [price, setPrice] = useState();
+  const [description, setDescription] = useState();
+  const [quantity, setQuantity] = useState();
+  const [cat_id, setCat] = useState("62f1fb62a777920bd748b911");
+  const [base, setBase] = useState("");
+
   const query = gql`
     {
       getAllProduct {
@@ -47,7 +50,7 @@ function GetAllProduct() {
       $id: ID
       $name: String!
       $price: String!
-      # $image: String!
+      $image: String!
       $description: String!
       $quantity: String!
     ) {
@@ -56,19 +59,42 @@ function GetAllProduct() {
         product: {
           name: $name
           price: $price
-          # image: $image
+          image: $image
           description: $description
           quantity: $quantity
         }
       ) {
         name
         price
-        # image
+        image
         description
         quantity
       }
     }
   `;
+  const saveFile = (e) => {
+    let files = e.target.files;
+    var allFiles = [];
+    for (var i = 0; i < files.length; i++) {
+      let file = files[i];
+
+      let reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        let fileInfo = {
+          name: file.name,
+          type: file.type,
+          size: Math.round(file.size / 1000) + " kB",
+          base64: reader.result,
+          file: file,
+        };
+        allFiles.push(fileInfo);
+        setBase(allFiles[0].base64);
+      };
+    }
+  };
 
   const product = async () => {
     const data = await request(endpoint, query);
@@ -98,8 +124,18 @@ function GetAllProduct() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("id", idd);
-    update_product({ variables: { id: idd, ...update } });
+
+    update_product({
+      variables: {
+        id: idd,
+        name,
+        image: base,
+        quantity,
+        price,
+        description,
+        cat_id,
+      },
+    });
     setTimeout(() => {
       window.location = "/";
     }, 2000);
@@ -129,9 +165,27 @@ function GetAllProduct() {
                     name="name"
                     className="form-control"
                     placeholder="Enter Product Name"
-                    onChange={handleOnChange}
+                    onChange={(e) => setName(e.target.value)}
                   />{" "}
                   <span id="demo2"></span>
+                </div>
+              </div>
+              <div className="d-flex flex-row align-items-center mb-4">
+                <div className="form-outline flex-fill mb-0">
+                  <label className="form-label" htmlFor="form3Example3c">
+                    Image *
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    className="form-control"
+                    placeholder="upload image"
+                    style={{
+                      border: "1px solid #bfe9ae",
+                    }}
+                    onChange={(e) => saveFile(e)}
+                  />
                 </div>
               </div>
               <div className="d-flex flex-row align-items-center mb-4">
@@ -152,7 +206,7 @@ function GetAllProduct() {
                     name="description"
                     className="form-control"
                     placeholder="Description"
-                    onChange={handleOnChange}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                   <span id="demo2"></span>
                 </div>
@@ -168,7 +222,7 @@ function GetAllProduct() {
                     name="quantity"
                     className="form-control"
                     placeholder="Enter quantity"
-                    onChange={handleOnChange}
+                    onChange={(e) => setQuantity(e.target.value)}
                   />{" "}
                   <span id="demo2"></span>
                 </div>
@@ -184,7 +238,7 @@ function GetAllProduct() {
                     name="price"
                     className="form-control"
                     placeholder="Enter price"
-                    onChange={handleOnChange}
+                    onChange={(e) => setPrice(e.target.value)}
                   />{" "}
                   <span id="demo2"></span>
                 </div>
@@ -201,8 +255,6 @@ function GetAllProduct() {
           </Box>
         </Modal>
       </div>
-      {/* <a href="/addProduct">Add Product</a> */}
-      {/* <a href="/addImage">Add Image</a> */}
 
       <h1 style={{ color: "red" }}>Here my all Products</h1>
       <a href="/addProduct">Add Product</a>
@@ -270,42 +322,5 @@ function GetAllProduct() {
     </div>
   );
 }
-
-// function App() {
-//   const [products, setProducts] = useState([]);
-//   const id = "62de89a0aa4d2531d789c94c";
-//   const query = gql`
-//     {
-//       getProductById(id:${id}) {
-//         name
-//         price
-//         quantity
-//         id
-//       }
-//     }
-//   `;
-
-//   const product = async () => {
-//     const data = await request(endpoint, query);
-//     setProducts(data.getProductById);
-//   };
-//   useEffect(() => {
-//     product();
-//   }, []);
-//   console.log("@@@@@@@@@@@@@@@@", products);
-//   return (
-//     <div className="App">
-//       <h1 style={{ color: "red" }}>Here my all Products</h1>
-//
-//       <>
-//         <h3 style={{ color: "blue" }}>{products.id}</h3>
-//         <p>{products.name}</p>
-//         <p>{products.price}</p>
-//         <p>{products.quantity}</p>
-//       </>
-//
-//     </div>
-//   );
-// }
 
 export default GetAllProduct;
