@@ -4,28 +4,16 @@ import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 
 const AddProduct = () => {
-  const [image, setImage] = useState([]);
   const [name, setName] = useState();
   const [price, setPrice] = useState();
   const [description, setDescription] = useState();
   const [quantity, setQuantity] = useState();
   const [cat_id, setCat] = useState("62f1fb62a777920bd748b911");
-  const [userInfo, setuserInfo] = useState({
-    file: [],
-    filepreview: null,
-  });
+
   const [base, setBase] = useState("");
 
   const saveFile = (e) => {
-    setImage(e.target.files[0]);
-    // setuserInfo({
-    //   ...userInfo,
-    //   file: e.target.files[0],
-    //   filepreview: URL.createObjectURL(e.target.files[0]),
-    // });
-
     let files = e.target.files;
-
     var allFiles = [];
     for (var i = 0; i < files.length; i++) {
       let file = files[i];
@@ -92,9 +80,9 @@ const AddProduct = () => {
         cat_id,
       },
     });
-    // setTimeout(() => {
-    //   window.location = "./";
-    // }, 2000);
+    setTimeout(() => {
+      window.location = "./AddProduct";
+    }, 2000);
   };
   return (
     <div className="container-scroller">

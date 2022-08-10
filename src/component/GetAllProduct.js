@@ -47,7 +47,7 @@ function GetAllProduct() {
       $id: ID
       $name: String!
       $price: String!
-      $image: String!
+      # $image: String!
       $description: String!
       $quantity: String!
     ) {
@@ -56,14 +56,14 @@ function GetAllProduct() {
         product: {
           name: $name
           price: $price
-          image: $image
+          # image: $image
           description: $description
           quantity: $quantity
         }
       ) {
         name
         price
-        image
+        # image
         description
         quantity
       }
@@ -201,61 +201,72 @@ function GetAllProduct() {
           </Box>
         </Modal>
       </div>
-      <a href="/addProduct">Add Product</a>
-      <a href="/addImage">Add Image</a>
+      {/* <a href="/addProduct">Add Product</a> */}
+      {/* <a href="/addImage">Add Image</a> */}
 
       <h1 style={{ color: "red" }}>Here my all Products</h1>
-      <table>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Image</th>
-        <th>Edit</th>
-        <th>Delete</th>
+      <a href="/addProduct">Add Product</a>
+      <br />
+      <br />
+      <br />
+      <div>
+        <table style={{ width: "100%" }}>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Image</th>
+          <th>Edit</th>
+          <th>Delete</th>
+          <br />
 
-        {products.map((item) => (
-          <Fragment key={item.id}>
-            <tr>
-              <td>
-                <p>{item.id}</p>
-              </td>
-              <td>
-                <p>{item.name}</p>
-              </td>
-              <td>
-                <p>{item.price}</p>
-              </td>
-              <td>
-                <p>{item.quantity}</p>
-              </td>
-              <td>
-                <img src={`http://localhost:5000/${item.image}`} />
-              </td>
-              <td>
-                <button
-                  onClick={() => {
-                    handleUpdate(item.id);
-                  }}
-                >
-                  Edit
-                </button>
-              </td>
-              <td>
-                <button
-                  onClick={() => {
-                    handleDelete(item.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
+          {products.map((item) => (
+            <Fragment key={item.id}>
+              <tr>
+                <td>
+                  <p>{item.id}</p>
+                </td>
+                <td>
+                  <p>{item.name}</p>
+                </td>
+                <td>
+                  <p>{item.price}</p>
+                </td>
+                <td>
+                  <p>{item.quantity}</p>
+                </td>
+                <td>
+                  <img
+                    style={{ width: "80px", height: "80px" }}
+                    src={`http://localhost:5000/${item.image}`}
+                    alt={item.name}
+                  />
+                </td>
+                <td>
+                  <button
+                    onClick={() => {
+                      handleUpdate(item.id);
+                    }}
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => {
+                      handleDelete(item.id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
 
-            <br />
-          </Fragment>
-        ))}
-      </table>
+              <br />
+            </Fragment>
+          ))}
+        </table>
+      </div>
     </div>
   );
 }
