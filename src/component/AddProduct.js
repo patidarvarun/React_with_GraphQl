@@ -8,7 +8,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState();
   const [description, setDescription] = useState();
   const [quantity, setQuantity] = useState();
-  const [cat_id, setCat] = useState("62f1fb62a777920bd748b911");
+  const [cat_id, setCat] = useState("62f1fbb8a777920bd748b913");
 
   const [base, setBase] = useState("");
 
@@ -60,7 +60,9 @@ const AddProduct = () => {
         image
         description
         quantity
-        cat_id
+        cat_id {
+          name
+        }
       }
     }
   `;
@@ -69,7 +71,6 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     createUser({
       variables: {
         name,

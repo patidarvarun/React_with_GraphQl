@@ -259,6 +259,11 @@ function GetAllProduct() {
       <h1 style={{ color: "red" }}>Here my all Products</h1>
       <a href="/addProduct">Add Product</a>
       <br />
+      <hr />
+      <a href="/checkout">Checkout</a>
+      <hr />
+
+      <br />
       <br />
       <br />
       <div>
